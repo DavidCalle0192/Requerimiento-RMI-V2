@@ -24,33 +24,44 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lb_tipoId" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_id" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_nombres" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_apellidos" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="lb_direccion" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="txf_apellidos" alignment="0" pref="58" max="32767" attributes="0"/>
+                  <Component id="txf_nombres" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txf_tipoId" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txf_id" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txf_direccion" max="32767" attributes="0"/>
+              </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lb_tipoId" min="-2" max="-2" attributes="0"/>
-                          <Component id="lb_id" min="-2" max="-2" attributes="0"/>
-                          <Component id="lb_nombres" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lb_apellidos" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lb_direccion" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txf_id" alignment="0" pref="104" max="32767" attributes="0"/>
-                          <Component id="txf_tipoId" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txf_nombres" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txf_apellidos" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txf_direccion" alignment="0" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jSpinner1" min="-2" pref="67" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                      <Component id="btn_crear" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="bnt_volver" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="123" max="32767" attributes="0"/>
+              <EmptySpace pref="38" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
+              <Component id="btn_crear" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="bnt_volver" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,11 +72,15 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lb_id" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txf_id" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lb_tipoId" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txf_tipoId" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jRadioButton3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -82,12 +97,12 @@
                   <Component id="lb_direccion" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txf_direccion" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="136" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btn_crear" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bnt_volver" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_crear" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="40" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -143,6 +158,23 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bnt_volverActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="jSpinner1">
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jRadioButton1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jRadioButton2"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="jRadioButton3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jRadioButton3"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
