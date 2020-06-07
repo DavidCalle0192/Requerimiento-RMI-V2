@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import servidorAlertas.dto.IndicadorDTO;
+import servidorAlertas.dto.UsuarioDTO;
 import servidorAlertas.sop_rmi.GestionPacienteInt;
 
 /**
@@ -28,6 +29,7 @@ public class MenuMedico extends javax.swing.JFrame {
     public static int aux=0;//controla la existencia de pacientes registrados 
     public static String enviarIndicadores;
     int rol;
+    UsuarioDTO objusuario;
    
     
     /**
@@ -38,6 +40,11 @@ public class MenuMedico extends javax.swing.JFrame {
         this.cm = cm;
         rol = 0;
         initComponents();
+        btn_iniciarSeguimiento.setEnabled(false);
+        btn_paraSeguimiento.setEnabled(false);
+        btn_paraSeguimiento.setVisible(false);
+        btn_listarPacientes.setEnabled(false);
+        btn_listarPacientes.setVisible(false);
     }
     
      public MenuMedico(GestionPacienteInt objRemoto) {
@@ -45,6 +52,11 @@ public class MenuMedico extends javax.swing.JFrame {
         this.cm = new ClienteMedico();
         rol = 1;
         initComponents();
+        btn_iniciarSeguimiento.setEnabled(false);
+        btn_paraSeguimiento.setEnabled(false);
+        btn_paraSeguimiento.setVisible(false);
+        btn_listarPacientes.setEnabled(false);
+        btn_listarPacientes.setVisible(false);
         lb_menuMedico.setText("Menú Administrador");
     }
 
@@ -52,6 +64,13 @@ public class MenuMedico extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void darVisibilidad(){
+        btn_registrarPaciente.setEnabled(false);
+        btn_registrarPaciente.setVisible(false);
+        
+        btn_iniciarSeguimiento.setEnabled(true);
+        
+    }
     public void hilo() {
         enviarIndicadores = "";
         texto = "";
@@ -66,25 +85,23 @@ public class MenuMedico extends javax.swing.JFrame {
                 if (bandera == 1) {
                     timer.cancel();
                 } else {
+                   
+                        IndicadorDTO indicador = cm.iniciarSeguimiento(objusuario.getId());
                     try {
-                        for (int i = 0; i < objRemoto.listarPacientes().size(); i++) {
-                            int id = objRemoto.listarPacientes().get(i).getId();
-                            String tipoId = objRemoto.listarPacientes().get(i).getTipo_id();
-                            IndicadorDTO indicador = cm.iniciarSeguimiento(id);
-                            enviarIndicadores = objRemoto.enviarIndicadores(indicador);
+                        enviarIndicadores = objRemoto.enviarIndicadores(indicador);
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(MenuMedico.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                             texto = texto
-                                    + "ID paciente: " + id
+                                    + "ID paciente: " + objusuario.getId()
                                     + "\nFrecuencia cardiaca: " + indicador.getFrecuenciaCardiaca()
                                     + "\nFrecuencia respiratoria: " + indicador.getFrecuenciaRespiratoria()
                                     + "\nTemperatura: " + indicador.getTemperatura() 
                                     + "\nRespuesta: "+enviarIndicadores
                                     +"\n\n";
-                        }
-                        txtArea_seguimiento.setText(texto);
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(MenuMedico.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
+                    txtArea_seguimiento.setText(texto);
+          
             }
 
         };
@@ -104,13 +121,13 @@ public class MenuMedico extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btn_registrarPaciente = new javax.swing.JButton();
         btn_iniciarSeguimiento = new javax.swing.JButton();
-        btn_salir = new javax.swing.JButton();
         lb_menuMedico = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtArea_seguimiento = new javax.swing.JTextArea();
         btn_paraSeguimiento = new javax.swing.JButton();
         btn_listarPacientes = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtArea_seguimiento = new javax.swing.JTextArea();
         btn_limpiar = new javax.swing.JButton();
+        btn_salir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,45 +145,7 @@ public class MenuMedico extends javax.swing.JFrame {
             }
         });
 
-        btn_salir.setText("Salir");
-        btn_salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_salirActionPerformed(evt);
-            }
-        });
-
         lb_menuMedico.setText("Menú Médico");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_menuMedico)
-                    .addComponent(btn_registrarPaciente)
-                    .addComponent(btn_iniciarSeguimiento)
-                    .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(302, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lb_menuMedico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_registrarPaciente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_iniciarSeguimiento)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_salir)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-
-        txtArea_seguimiento.setColumns(20);
-        txtArea_seguimiento.setRows(5);
-        jScrollPane1.setViewportView(txtArea_seguimiento);
 
         btn_paraSeguimiento.setText("Parar Seguimiento");
         btn_paraSeguimiento.addActionListener(new java.awt.event.ActionListener() {
@@ -182,10 +161,54 @@ public class MenuMedico extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lb_menuMedico)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_registrarPaciente)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_listarPacientes))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btn_iniciarSeguimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_paraSeguimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(177, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lb_menuMedico)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_registrarPaciente)
+                    .addComponent(btn_listarPacientes))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_iniciarSeguimiento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_paraSeguimiento)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        txtArea_seguimiento.setColumns(20);
+        txtArea_seguimiento.setRows(5);
+        jScrollPane1.setViewportView(txtArea_seguimiento);
+
         btn_limpiar.setText("Limpiar");
         btn_limpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_limpiarActionPerformed(evt);
+            }
+        });
+
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
             }
         });
 
@@ -199,15 +222,11 @@ public class MenuMedico extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(btn_listarPacientes)
+                                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_limpiar)
-                                .addGap(46, 46, 46)
-                                .addComponent(btn_paraSeguimiento)
-                                .addGap(34, 34, 34))
+                                .addComponent(btn_limpiar))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
@@ -220,10 +239,9 @@ public class MenuMedico extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_paraSeguimiento)
-                    .addComponent(btn_listarPacientes)
-                    .addComponent(btn_limpiar))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(btn_limpiar)
+                    .addComponent(btn_salir))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -231,6 +249,7 @@ public class MenuMedico extends javax.swing.JFrame {
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_registrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarPacienteActionPerformed
@@ -256,6 +275,8 @@ public class MenuMedico extends javax.swing.JFrame {
     private void btn_paraSeguimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_paraSeguimientoActionPerformed
         // TODO add your handling code here:
         bandera = 1;
+        btn_paraSeguimiento.setEnabled(false);
+        btn_paraSeguimiento.setVisible(false);
     }//GEN-LAST:event_btn_paraSeguimientoActionPerformed
 
     private void btn_iniciarSeguimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarSeguimientoActionPerformed
@@ -264,6 +285,8 @@ public class MenuMedico extends javax.swing.JFrame {
         if(aux == 0){
             JOptionPane.showMessageDialog(null, "No existen pacientes registrados.");
         }else{
+            btn_paraSeguimiento.setEnabled(true);
+            btn_paraSeguimiento.setVisible(true);
             hilo();
         }
         

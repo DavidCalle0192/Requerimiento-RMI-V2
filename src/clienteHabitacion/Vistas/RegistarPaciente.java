@@ -23,6 +23,7 @@ public class RegistarPaciente extends javax.swing.JFrame {
     public static GestionPacienteInt objRemoto;
     public static ClienteMedico cm;
     int rol = 1;//1-->admin 0-->medico
+   // public static UsuarioDTO objUsuario;
 
     /**
      * Creates new form prueba
@@ -193,7 +194,8 @@ public class RegistarPaciente extends javax.swing.JFrame {
                 } else {
                     menu = new MenuMedico(objRemoto, cm);
                 }
-
+                menu.objusuario = paciente;
+                menu.darVisibilidad();
                 menu.setVisible(true);
             }
 
