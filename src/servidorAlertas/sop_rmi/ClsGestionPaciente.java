@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import servidorAlertas.dao.HistorialAlertaDAO;
 import servidorAlertas.dto.HistorialDTO;
 import servidorAlertas.dto.IndicadorDTO;
@@ -75,7 +77,7 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
     }
 
     @Override
-    public String enviarIndicadores(IndicadorDTO objIndicador) throws RemoteException {
+    public String enviarIndicadores(IndicadorDTO objIndicador){
         System.out.println("Ejecutando enviarIndicadores...");
         
         String respuesta = "";
@@ -104,7 +106,11 @@ public class ClsGestionPaciente extends UnicastRemoteObject implements GestionPa
             
             AlertaDTO objAlerta = new AlertaDTO(historial, objIndicador, objPaciente,LocalDate.now(),LocalTime.now(),puntuacion);
             
-            //objRefRemNotificacion.enviarAlerta(objAlerta); //es linea genera conflicto
+            try {
+                objRefRemNotificacion.enviarAlerta(objAlerta); 
+            } catch (RemoteException ex) {
+                Logger.getLogger(ClsGestionPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             System.out.println("Alerta almacenada y enviada");
         }else{

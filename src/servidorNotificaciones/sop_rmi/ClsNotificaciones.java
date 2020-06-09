@@ -20,15 +20,18 @@ import servidorNotificaciones.vistas.VistaNotificaciones;
  * @author JhonMZ
  */
 public class ClsNotificaciones extends UnicastRemoteObject implements NotificacionesInt{
-
+    
+    
+    VistaNotificaciones objVista;
+    
     public ClsNotificaciones() throws RemoteException {
         super();
+        this.objVista = new VistaNotificaciones();
     }
     
     @Override
     public void enviarAlerta(AlertaDTO objAlerta) throws RemoteException {
         System.out.println("Ejecutando enviarAlerta...");
-        VistaNotificaciones objVista = new VistaNotificaciones();
         objVista.editarInfo(objAlerta);
         objVista.setVisible(true);
         /*UsuarioDTO objPaciente = objAlerta.getPaciente();

@@ -66,8 +66,6 @@ public class VistaNotificaciones extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Alerta generada");
@@ -282,9 +280,12 @@ public class VistaNotificaciones extends javax.swing.JFrame {
         lblNomApe.setText("Nombre y apellidos:"+objPaciente.getNombres()+" "+objPaciente.getApellidos());
         lblDireccion.setText("Direccion:"+objPaciente.getDireccion());
         lblFecha.setText("Fecha de alerta:"+objAlertaDTO.getFecha().toString());
-        lblHora.setText("Fecha de alerta:"+objAlertaDTO.getHora().toString());
+        lblHora.setText("Hora de alerta:"+objAlertaDTO.getHora().toString());
         
-        DefaultTableModel modelInd = (DefaultTableModel) tblIndicadores.getModel();
+        
+        DefaultTableModel modelInd = (DefaultTableModel)tblIndicadores.getModel();
+        modelInd.setRowCount(0);
+        
         modelInd.addRow(new Object[]{"Frecuencia Cardiaca",objAlertaDTO.getIndicadores().getFrecuenciaCardiaca()});
         modelInd.addRow(new Object[]{"Frecuencia Respiratoria",objAlertaDTO.getIndicadores().getFrecuenciaRespiratoria()});
         modelInd.addRow(new Object[]{"Temperatura",objAlertaDTO.getIndicadores().getTemperatura()});
@@ -293,13 +294,14 @@ public class VistaNotificaciones extends javax.swing.JFrame {
         if(objAlertaDTO.getPuntuacion()==2)lbl1.setText("Se debe visitar al paciente");
         if(objAlertaDTO.getPuntuacion()==3)lbl1.setText("Se debe remitir al paciente al hospital");
         
-        DefaultTableModel modelHis = (DefaultTableModel) tblHistorial.getModel();
-        
+        DefaultTableModel modelHis = (DefaultTableModel)tblHistorial.getModel();
+        modelHis.setRowCount(0);
         Stack<HistorialDTO> historial = objAlertaDTO.getHistorial();
         while(!historial.empty()){
             HistorialDTO objHistorialTemp = historial.pop();
             modelHis.addRow(new Object[]{objHistorialTemp.getFecha().toString(),objHistorialTemp.getHora().toString(),objHistorialTemp.getPuntuacion()+""});
         }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
